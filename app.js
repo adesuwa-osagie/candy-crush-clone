@@ -81,7 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Invalid Move
         } else if (squareIdBeingReplaced && !validMove) {
             squares[squareIdBeingReplaced].style.backgroundColor = colorBeingReplaced;
-
+            squares[squareIdBeingDragged].style.backgroundColor = colorBeingDragged;
+        } else {
+            squares[squareIdBeingDragged].style.backgroundColor = colorBeingDragged;
         }
 
     }
