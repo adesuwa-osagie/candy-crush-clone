@@ -89,6 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    
+
+
     // Checking for matches
 
     // Check for row of Five
@@ -107,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             if (rowOfFour.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
-                score += 4;
+                score += 5;
                 rowOfFour.forEach(index => {
                     squares[index].style.backgroundColor = '';
                 })
