@@ -1,11 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.querySelector('.grid');
+    const scoreDisplay = document.getElementById('score');
     const width = 8;
     const squares = [];
     let score = 0;
 
 
     const candyColors = [
+
+        //Example for adding image: 'url(images/red-candy.png)'
+        //Replace 'backgroundColor' with 'backgroundImage'
         'red',
         'yellow',
         'orange',
@@ -89,8 +93,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    
+    // drop candies once some have been cleared
+    function moveDown() {
+        //55 is the last index of the second to last row
+        for (i = 0; i < 55; i++) {
+            if (squares[i + width].style.backgroundColor === '') {
+                squares[i + width].style.backgroundColor = squares[i].style.backgroundColor;
+                squares[i].style.backgroundColor = ''
 
+                const firstRow = [0, 1, 2, 3, 4, 5, 6, 7];
+                const isFirstRow = firstRow.includes(i);
+                if (isFirstRow && squares[i].style.backgroundColor === '') {
+                    let randomColor = Math.floor(Math.random() * candyColors.length);
+                    squares[i].style.backgroundColor = candyColors[randomColor];
+                }
+            }
+        }
+    }
 
     // Checking for matches
 
@@ -111,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (rowOfFour.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                 score += 5;
+                scoreDisplay.innerHTML = score;
                 rowOfFour.forEach(index => {
                     squares[index].style.backgroundColor = '';
                 })
@@ -130,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (columnOfFive.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                 score += 5;
+                scoreDisplay.innerHTML = score;
                 columnOfFive.forEach(index => {
                     squares[index].style.backgroundColor = '';
                 })
@@ -156,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (rowOfFour.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                 score += 4;
+                scoreDisplay.innerHTML = score;
                 rowOfFour.forEach(index => {
                     squares[index].style.backgroundColor = '';
                 })
@@ -175,6 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (columnOfFour.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                 score += 4;
+                scoreDisplay.innerHTML = score;
                 columnOfFour.forEach(index => {
                     squares[index].style.backgroundColor = '';
                 })
@@ -201,6 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
            if (rowOfThree.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                score += 3;
+               scoreDisplay.innerHTML = score;
                rowOfThree.forEach(index => {
                    squares[index].style.backgroundColor = '';
                })
@@ -220,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
            if (columnOfThree.every(index => squares[index].style.backgroundColor === decidedColor && !isBlank)) {
                score += 3;
+               scoreDisplay.innerHTML = score;
                columnOfThree.forEach(index => {
                    squares[index].style.backgroundColor = '';
                })
@@ -231,6 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Checks the window for row of three every 100 miliseconds
     window.setInterval(function(){
+        moveDown();
         checkRowForFive();
         checkColumnForFive();
         checkRowForFour();
